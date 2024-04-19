@@ -5,7 +5,12 @@ export type BlogType = {
     likes: Number;
 };
 
-export type AuthorType = {
+export type AuthorWithBlogs = {
     author: String;
     blogs: number;
+};
+
+export type AuthorWithLikes = {
+    author: String;
+    likes: number;
 };

@@ -1,7 +1,7 @@
 import { describe, test } from "node:test";
 import assert from "node:assert";
 import listHelper from "../utils/list_helper";
-import { AuthorType, BlogType } from "../types";
+import { AuthorWithBlogs, AuthorWithLikes, BlogType } from "../types";
 
 test("dummy returns one", () => {
     const blogs: BlogType[] = [];
@@ -104,17 +104,58 @@ describe("author with the most blogs", () => {
         url: "b",
         likes: 4,
     };
-    test("of an empty list is undefined", () => {
+    test("in an empty list is undefined", () => {
         assert.deepStrictEqual(listHelper.mostBlogs([]), undefined);
     });
-    test("of a list of length 1", () => {
-        const expected: AuthorType = { author: "a", blogs: 1 };
+    test("in a list of length 1", () => {
+        const expected: AuthorWithBlogs = { author: "a", blogs: 1 };
         assert.deepStrictEqual(listHelper.mostBlogs([blog1]), expected);
     });
-    test("of a list of length 4", () => {
-        const expected: AuthorType = { author: "b", blogs: 2 };
+    test("in a list of length 4", () => {
+        const expected: AuthorWithBlogs = { author: "b", blogs: 2 };
         assert.deepStrictEqual(
             listHelper.mostBlogs([blog1, blog2, blog3, blog4]),
+            expected
+        );
+    });
+});
+
+describe("author with the most likes", () => {
+    const blog1: BlogType = {
+        title: "a",
+        author: "a",
+        url: "a",
+        likes: 1,
+    };
+    const blog2: BlogType = {
+        title: "b",
+        author: "b",
+        url: "b",
+        likes: 2,
+    };
+    const blog3: BlogType = {
+        title: "c",
+        author: "c",
+        url: "c",
+        likes: 3,
+    };
+    const blog4: BlogType = {
+        title: "b",
+        author: "b",
+        url: "b",
+        likes: 4,
+    };
+    test("in an empty list is undefined", () => {
+        assert.deepStrictEqual(listHelper.mostLikes([]), undefined);
+    });
+    test("in a list of length 1", () => {
+        const expected: AuthorWithLikes = { author: "a", likes: 1 };
+        assert.deepStrictEqual(listHelper.mostLikes([blog1]), expected);
+    });
+    test("in a list of length 4", () => {
+        const expected: AuthorWithLikes = { author: "b", likes: 6 };
+        assert.deepStrictEqual(
+            listHelper.mostLikes([blog1, blog2, blog3, blog4]),
             expected
         );
     });

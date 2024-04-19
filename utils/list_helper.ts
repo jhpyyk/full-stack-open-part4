@@ -1,4 +1,5 @@
-import { BlogType, AuthorType } from "../types";
+import { log } from "console";
+import { BlogType, AuthorWithBlogs, AuthorWithLikes } from "../types";
 import * as _ from "lodash";
 
 const dummy = (_blogs: BlogType[]) => {
@@ -26,7 +27,7 @@ const favoriteBlog = (blogs: BlogType[]): BlogType | undefined => {
     return blogs.reduce(moreLikedBlog, blogs[0]);
 };
 
-const mostBlogs = (blogs: BlogType[]): AuthorType | undefined => {
+const mostBlogs = (blogs: BlogType[]): AuthorWithBlogs | undefined => {
     if (blogs.length === 0) {
         return undefined;
     }
@@ -38,9 +39,29 @@ const mostBlogs = (blogs: BlogType[]): AuthorType | undefined => {
     return { author: mostBlogsAuthor, blogs: counts[mostBlogsAuthor] };
 };
 
+const mostLikes = (blogs: BlogType[]): AuthorWithLikes | undefined => {
+    if (blogs.length === 0) {
+        return undefined;
+    }
+    const countAuthorLikes = (author: BlogType[]): number => {
+        return _.sumBy(author, "likes");
+    };
+    const grouped = _.groupBy(blogs, "author");
+    const likeCounts = _.mapValues(grouped, countAuthorLikes);
+    const mostLikesAuthor = _.maxBy(
+        _.keys(likeCounts),
+        (author) => likeCounts[author]
+    );
+    if (!mostLikesAuthor) {
+        return undefined;
+    }
+    return { author: mostLikesAuthor, likes: likeCounts[mostLikesAuthor] };
+};
+
 export default {
     dummy,
     totalLikes,
     favoriteBlog,
     mostBlogs,
+    mostLikes,
 };
