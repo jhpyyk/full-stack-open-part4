@@ -1,4 +1,3 @@
-import { log } from "console";
 import { BlogType, AuthorWithBlogs, AuthorWithLikes } from "../types";
 import * as _ from "lodash";
 

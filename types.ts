@@ -2,7 +2,7 @@ export type BlogType = {
     title: String;
     author: String;
     url: String;
-    likes: Number;
+    likes?: Number;
 };
 
 export type AuthorWithBlogs = {
