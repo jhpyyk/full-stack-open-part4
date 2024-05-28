@@ -91,6 +91,26 @@ describe("Blog API tests", () => {
         assert.deepStrictEqual(blogsInitial.body.slice(1), blogsAfter.body);
     });
 
+    test("Blogs can be modified", async () => {
+        const blogsInitial = await api.get("/api/blogs");
+        const idOfFirst = blogsInitial.body[0].id;
+
+        const expectedBlog = {
+            ...blogsInitial.body[0],
+            title: "new_title",
+            likes: blogsInitial.body[0].likes + 1,
+        };
+
+        const modifiedBlog = await api
+            .patch(`/api/blogs/${idOfFirst}`)
+            .send({
+                title: "new_title",
+                likes: blogsInitial.body[0].likes + 1,
+            });
+
+        assert.deepStrictEqual(modifiedBlog.body, expectedBlog);
+    });
+
     after(async () => {
         await mongoose.connection.close();
     });

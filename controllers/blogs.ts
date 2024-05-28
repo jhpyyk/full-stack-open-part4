@@ -25,4 +25,10 @@ blogRouter.delete("/api/blogs/:id", async (request, response) => {
     response.status(204).end();
 });
 
+blogRouter.patch("/api/blogs/:id", async (request, response) => {
+    await Blog.updateOne({ _id: request.params.id }, { ...request.body });
+    const blog = await Blog.findOne({ _id: request.params.id });
+    response.status(200).send(blog);
+});
+
 export default blogRouter;
