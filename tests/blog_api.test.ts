@@ -82,6 +82,15 @@ describe("Blog API tests", () => {
         assert.strictEqual(response.body[response.body.length - 1].likes, 0);
     });
 
+    test("Blogs can be removed", async () => {
+        const blogsInitial = await api.get("/api/blogs");
+        const idOfFirst = blogsInitial.body[0].id;
+
+        await api.delete(`/api/blogs/${idOfFirst}`);
+        const blogsAfter = await api.get("/api/blogs");
+        assert.deepStrictEqual(blogsInitial.body.slice(1), blogsAfter.body);
+    });
+
     after(async () => {
         await mongoose.connection.close();
     });
