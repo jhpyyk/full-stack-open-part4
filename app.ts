@@ -4,10 +4,12 @@ import cors from "cors";
 import mongoose from "mongoose";
 import blogRouter from "./controllers/blogs";
 import { errorHandler } from "./utils/middleware";
+import userRouter from "./controllers/users";
 
 const app = express();
 app.use(express.json());
 app.use(blogRouter);
+app.use(userRouter);
 app.use(cors());
 app.use(errorHandler);
 

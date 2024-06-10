@@ -14,3 +14,8 @@ export type AuthorWithLikes = {
     author: String;
     likes: number;
 };
+
+export type UserType = {
+    username: string;
+    name: string;
+};
