@@ -1,6 +1,6 @@
 import { Router } from "express";
 import User from "../models/user";
-import bcrypt from "bcrypt";
+import createUser from "../utils/helper_functions";
 
 const userRouter = Router();
 
@@ -16,13 +16,13 @@ userRouter.get("/api/users/:id", async (request, response) => {
 
 userRouter.post("/api/users", async (request, response) => {
     const { username, name, password } = request.body;
-
-    const saltRounds = 10;
-    const passwordHash = await bcrypt.hash(password, saltRounds);
-    const user = new User({ username, name, passwordHash });
-
-    const savedUser = await user.save();
-    response.status(201).json(savedUser);
+    try {
+        const user = await createUser(username, name, password);
+        const savedUser = await user.save();
+        response.status(201).json(savedUser);
+    } catch {
+        response.status(400).json({ error: "Invalid user" });
+    }
 });
 
 userRouter.delete("/api/users/:id", async (request, response) => {

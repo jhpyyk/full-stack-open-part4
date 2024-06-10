@@ -6,12 +6,14 @@ export const errorHandler = (
     response: Response,
     next: NextFunction
 ) => {
-    if (error.name === "ValidationError") {
-        response.status(400).json({ error: "Validation error" });
-    } else {
-        response
-            .status(500)
-            .send({ errors: [{ message: "Something went srong" }] });
+    switch (error.name) {
+        case "ValidationError":
+            response.status(400).json({ error: "Validation error" });
+            break;
+        default:
+            response
+                .status(500)
+                .send({ errors: [{ message: "Something went srong" }] });
     }
 
     next(error);

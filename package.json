@@ -7,7 +7,7 @@
     "tsc": "tsc",
     "start": "cross-env NODE_ENV=production node build/index.js",
     "dev": "cross-env NODE_ENV=development ts-node-dev index.ts",
-    "test": "glob -c \"cross-env NODE_ENV=test node --import tsx --no-warnings --test\" \"./tests/**/*.test.ts\""
+    "test": "glob -c \"cross-env NODE_ENV=test node --import tsx --no-warnings --test-concurrency=1 --test\" \"./tests/**/*.test.ts\""
   },
   "author": "Juuso Pyykkönen",
   "license": "MIT",

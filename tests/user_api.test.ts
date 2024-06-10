@@ -65,6 +65,50 @@ describe("User API tests", () => {
         assert(names.includes("test_name"));
     });
 
+    describe("Invalid user fields must throw validation error", () => {
+        test("Username must be at least 3 characters long", async () => {
+            const newUser: UserType & { password: string } = {
+                username: "t",
+                name: "test_name",
+                password: "test_password",
+            };
+            await api
+                .post("/api/users")
+                .send(newUser)
+                .expect(400)
+                .expect("Content-Type", /application\/json/)
+                .expect({ error: "Invalid user" });
+        });
+
+        test("Name must be at least 3 characters long", async () => {
+            const newUser: UserType & { password: string } = {
+                username: "test_username",
+                name: "t",
+                password: "test_password",
+            };
+            await api
+                .post("/api/users")
+                .send(newUser)
+                .expect(400)
+                .expect("Content-Type", /application\/json/)
+                .expect({ error: "Invalid user" });
+        });
+
+        test("Password must be at least 3 characters long", async () => {
+            const newUser: UserType & { password: string } = {
+                username: "test_username",
+                name: "test_name",
+                password: "t",
+            };
+            await api
+                .post("/api/users")
+                .send(newUser)
+                .expect(400)
+                .expect("Content-Type", /application\/json/)
+                .expect({ error: "Invalid user" });
+        });
+    });
+
     test("Users can be removed", async () => {
         const usersInitial = await api.get("/api/users");
         const idOfFirst = usersInitial.body[0].id;
