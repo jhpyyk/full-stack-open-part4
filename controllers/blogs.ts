@@ -5,7 +5,11 @@ import User from "../models/user";
 const blogRouter = Router();
 
 blogRouter.get("/api/blogs", async (_request, response) => {
-    const blogs = await Blog.find({}).populate("user");
+    const blogs = await Blog.find({}).populate("user", {
+        username: true,
+        name: true,
+        id: true,
+    });
     response.json(blogs);
 });
 
@@ -25,7 +29,13 @@ blogRouter.post("/api/blogs", async (request, response) => {
         user: user._id,
     });
 
-    await blog.save();
+    const savedBlog = await blog.save();
+    if (!user.blogs) {
+        return response.status(404).json({ error: "User has no blogs" });
+    }
+    user.blogs.push(savedBlog._id);
+    const savedUser = await user.save();
+    console.log(savedUser);
     return response.status(201).json(blog);
 });
 

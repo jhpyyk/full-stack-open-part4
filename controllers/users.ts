@@ -5,7 +5,12 @@ import createUser from "../utils/helper_functions";
 const userRouter = Router();
 
 userRouter.get("/api/users", async (_request, response) => {
-    const users = await User.find({});
+    const users = await User.find({}).populate("blogs", {
+        title: true,
+        author: true,
+        url: true,
+        id: true,
+    });
     response.json(users);
 });
 

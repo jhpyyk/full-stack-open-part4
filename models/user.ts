@@ -3,6 +3,12 @@ import mongoose from "mongoose";
 const userSchema = new mongoose.Schema({
     username: { type: String, minLength: 3, required: true },
     name: { type: String, minLength: 3, required: true, unique: true },
+    blogs: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Blog",
+        },
+    ],
     passwordHash: { type: String, required: true },
 });
 
