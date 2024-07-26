@@ -1,10 +1,11 @@
 import { Router } from "express";
 import Blog from "../models/blog";
+import User from "../models/user";
 
 const blogRouter = Router();
 
 blogRouter.get("/api/blogs", async (_request, response) => {
-    const blogs = await Blog.find({});
+    const blogs = await Blog.find({}).populate("user");
     response.json(blogs);
 });
 
@@ -14,10 +15,18 @@ blogRouter.get("/api/blogs/:id", async (request, response) => {
 });
 
 blogRouter.post("/api/blogs", async (request, response) => {
-    const blog = new Blog(request.body);
+    const user = await User.findOne({});
+    if (!user) {
+        return response.status(404).json({ error: "User not found" });
+    }
+
+    const blog = new Blog({
+        ...request.body,
+        user: user._id,
+    });
 
     await blog.save();
-    response.status(201).json(blog);
+    return response.status(201).json(blog);
 });
 
 blogRouter.delete("/api/blogs/:id", async (request, response) => {
