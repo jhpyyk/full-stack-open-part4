@@ -41,14 +41,17 @@ export const initialUsersWithPassword: Array<
 > = [
     {
         ...initialUsers[0],
-        passwordHash: "password1",
+        passwordHash:
+            "$2b$10$xu9HYpQtwKDgDA5bO0CUY.Tp6hxEtmx174xJWNBfqUvDCZUvylrPC", //password1
     },
     {
         ...initialUsers[1],
-        passwordHash: "password2",
+        passwordHash:
+            "$2b$10$Z9MIogD0KvpSXumhc/W3WuHdDfSI6eOLysXlaVyfOkwBguLmDL76m", //password2
     },
     {
         ...initialUsers[2],
-        passwordHash: "password3",
+        passwordHash:
+            "$2b$10$yCcRjZxjkWkz10Wp.hmdi.o5m1vridzYyzj1TCOwyOq5qc8ktn5vO", //password3
     },
 ];

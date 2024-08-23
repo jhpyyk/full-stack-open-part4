@@ -5,9 +5,11 @@ import mongoose from "mongoose";
 import blogRouter from "./controllers/blogs";
 import { errorHandler } from "./utils/middleware";
 import userRouter from "./controllers/users";
+import loginRouter from "./controllers/login";
 
 const app = express();
 app.use(express.json());
+app.use(loginRouter);
 app.use(blogRouter);
 app.use(userRouter);
 app.use(cors());

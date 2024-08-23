@@ -19,3 +19,8 @@ export type UserType = {
     username: string;
     name: string;
 };
+
+export type LoginInfo = {
+    username: string;
+    password: string;
+};
