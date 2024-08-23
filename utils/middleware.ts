@@ -10,6 +10,9 @@ export const errorHandler = (
         case "ValidationError":
             response.status(400).json({ error: "Validation error" });
             break;
+        case "JsonWebTokenError":
+            response.status(400).json({ error: "token missing or invalid" });
+            break;
         default:
             response
                 .status(500)

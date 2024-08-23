@@ -24,3 +24,9 @@ export type LoginInfo = {
     username: string;
     password: string;
 };
+
+export type AuthorizedUser = {
+    username: string;
+    name: string;
+    token: string;
+};

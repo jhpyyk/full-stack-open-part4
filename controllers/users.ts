@@ -1,6 +1,6 @@
 import { Router } from "express";
 import User from "../models/user";
-import createUser from "../utils/helper_functions";
+import { createUser } from "../utils/helper_functions";
 
 const userRouter = Router();
 

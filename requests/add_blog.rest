@@ -1,9 +1,10 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lMSIsImlkIjoiNjY2NmRhMzVhMjAxZmQwZTYzNDc4OWQ1IiwiaWF0IjoxNzI0NDAwODk0fQ.C7vyr8VSMVoy9XcXYdTlL1R0toNJ3brGcZZqaFxiUtQ
 
 {
-    "title": "zzz2",
-    "author": "mmmm",
-    "url": "spoof",
+    "title": "auth",
+    "author": "mm",
+    "url": "spoofss",
     "likes": 100
 }

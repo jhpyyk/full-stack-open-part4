@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { Router } from "express";
 import User from "../models/user";
+import { AuthorizedUser } from "../types";
 
 const loginRouter = Router();
 
@@ -29,9 +30,12 @@ loginRouter.post("/api/login", async (request, response) => {
     }
     const token = jwt.sign(userForToken, process.env.SECRET);
 
-    return response
-        .status(200)
-        .json({ token, username: user.username, name: user.name });
+    const authorizedUser: AuthorizedUser = {
+        username: user.username,
+        name: user.name,
+        token: token,
+    };
+    return response.status(200).json(authorizedUser);
 });
 
 export default loginRouter;

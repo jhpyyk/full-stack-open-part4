@@ -1,6 +1,12 @@
 import { Router } from "express";
 import Blog from "../models/blog";
 import User from "../models/user";
+import jwt from "jsonwebtoken";
+import { getTokenFrom } from "../utils/helper_functions";
+
+interface UserPayload {
+    id: string;
+}
 
 const blogRouter = Router();
 
@@ -19,7 +25,20 @@ blogRouter.get("/api/blogs/:id", async (request, response) => {
 });
 
 blogRouter.post("/api/blogs", async (request, response) => {
-    const user = await User.findOne({});
+    const token = getTokenFrom(request);
+    if (!token) {
+        return response
+            .status(401)
+            .json({ error: "invalid authorization header" });
+    }
+    if (!process.env.SECRET) {
+        return response.status(500).json({ error: "missing secret in env" });
+    }
+    const decodedToken = jwt.verify(token, process.env.SECRET) as UserPayload;
+    if (!decodedToken.id) {
+        return response.status(401).json({ error: "invalid token" });
+    }
+    const user = await User.findById(decodedToken.id);
     if (!user) {
         return response.status(404).json({ error: "User not found" });
     }
@@ -34,8 +53,7 @@ blogRouter.post("/api/blogs", async (request, response) => {
         return response.status(404).json({ error: "User has no blogs" });
     }
     user.blogs.push(savedBlog._id);
-    const savedUser = await user.save();
-    console.log(savedUser);
+    await user.save();
     return response.status(201).json(blog);
 });
 
