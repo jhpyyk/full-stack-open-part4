@@ -9,9 +9,10 @@ import loginRouter from "./controllers/login";
 
 const app = express();
 app.use(express.json());
-app.use(loginRouter.use(cors()));
-app.use(blogRouter.use(cors()));
-app.use(userRouter.use(cors()));
+app.use(cors());
+app.use(loginRouter);
+app.use(blogRouter);
+app.use(userRouter);
 app.use(errorHandler);
 
 const mongoUrl = config.MONGODB_URI;

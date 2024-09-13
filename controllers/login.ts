@@ -8,6 +8,7 @@ const loginRouter = Router();
 
 loginRouter.post("/api/login", async (request, response) => {
     const { username, password } = request.body;
+    console.log("logging in with username:", username);
 
     const user = await User.findOne({ username });
     const passwordCorrect =
@@ -35,6 +36,7 @@ loginRouter.post("/api/login", async (request, response) => {
         name: user.name,
         token: token,
     };
+    console.log("credentials ok");
     return response.status(200).json(authorizedUser);
 });
 
