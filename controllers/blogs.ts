@@ -16,7 +16,7 @@ blogRouter.get("/api/blogs", async (_request, response) => {
         name: true,
         id: true,
     });
-    response.json(blogs);
+    return response.status(200).json(blogs);
 });
 
 blogRouter.get("/api/blogs/:id", async (request, response) => {
