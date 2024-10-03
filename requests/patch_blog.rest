@@ -1,7 +1,7 @@
-PATCH http://localhost:3003/api/blogs/6655bd8aebe9115e918fe9f0
+PATCH http://localhost:3003/api/blogs/66e5485dcfbc4652482c08a9
 Content-Type: application/json
 
 {
-    "title": "bzzzz",
-    "likes": 102
+    "title": "likes 15",
+    "likes": 15
 }

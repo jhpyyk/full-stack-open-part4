@@ -1,3 +1,5 @@
+import { Types } from "mongoose";
+
 export type BlogType = {
     title: String;
     author: String;
@@ -28,5 +30,6 @@ export type LoginInfo = {
 export type AuthorizedUser = {
     username: string;
     name: string;
+    id: Types.ObjectId;
     token: string;
 };

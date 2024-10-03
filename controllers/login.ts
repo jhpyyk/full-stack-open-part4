@@ -34,6 +34,7 @@ loginRouter.post("/api/login", async (request, response) => {
     const authorizedUser: AuthorizedUser = {
         username: user.username,
         name: user.name,
+        id: user._id,
         token: token,
     };
     console.log("credentials ok");
